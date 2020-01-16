@@ -1,0 +1,7 @@
+{
+    "name": "sideways/sw-classic-ig",
+    "type": "project",
+    "require": {
+        "facebook/graph-sdk": "^5.7"
+    }
+}
