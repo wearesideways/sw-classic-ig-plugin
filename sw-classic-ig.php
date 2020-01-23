@@ -11,6 +11,9 @@ if (!defined('ABSPATH')) {
     die('Invalid Request');
 }
 
+require dirname(__FILE__) . '/vendor/autoload.php';
+require dirname(__FILE__) . '/lib/ajax_functions.php';
+
 //************************************************************************************
 // This remove a filter from ACF plugin to hide the default custom fields box
 add_filter('acf/settings/remove_wp_meta_box', '__return_false');
@@ -29,8 +32,8 @@ if (!defined('SW_IG_REMOVE_HASHTAGS')) {
 }
 
 add_action('admin_enqueue_scripts', function () {
-    $vars = ['ajaxurl' => admin_url('admin-ajax.php')];
     wp_register_script('sw_ig_plugin_instagram_scripts', SW_IG_PLUGIN_URL . 'js/admin.js', ['jquery'], '1.0.0', false);
+    $vars = ['ajaxurl' => admin_url('admin-ajax.php')];
     wp_localize_script('sw_ig_plugin_instagram_scripts', 'vars', $vars);
     wp_enqueue_script('sw_ig_plugin_instagram_scripts');
     wp_enqueue_style('sw_ig_plugin_instagram_style', SW_IG_PLUGIN_URL . 'css/admin.css', [], '1.0.0');
@@ -48,9 +51,6 @@ add_action('admin_notices', function () {
         echo "</ul></div>";
     }
 });
-
-require dirname(__FILE__) . '/vendor/autoload.php';
-require dirname(__FILE__) . '/lib/ajax_functions.php';
 
 if (is_admin()) {
     add_action('admin_menu', function () {

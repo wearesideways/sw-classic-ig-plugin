@@ -10,12 +10,13 @@ $settings = $helpers->getPluginSettings();
 $fbConnector = new SwIgPlugin\FacebookApiConnector();
 $loginUrl = $fbConnector->getLoginUrl();
 
-echo '<a href="' . htmlspecialchars($loginUrl) . '" id="sw-ig-login-button"><img src="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/OF6ddsGKpeB.png" alt="">Connect new Facebook Account!</a>';
+echo '<a href="' . htmlspecialchars($loginUrl) . '" id="sw-ig-login-button"><img src="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/OF6ddsGKpeB.png" alt="">Connect new Facebook Account</a>';
 
+$removeHashtags = SW_IG_REMOVE_HASHTAGS ? 'yes' : 'no';
 echo "<table class='form-table'>
 <tr><th>Default Post Type</th><td>" . $settings['post_type'] . "</td></tr>
 <tr><th>Default Post Status</th><td>" . $settings['post_status'] . "</td></tr>
-<tr><th>Should remove hashtags?</th><td>" . SW_IG_REMOVE_HASHTAGS . "</td></tr>
+<tr><th>Should remove hashtags?</th><td>" . $removeHashtags . "</td></tr>
 </table>";
 
 echo "<h3 class='section-title'>Connected Accounts</h3>";

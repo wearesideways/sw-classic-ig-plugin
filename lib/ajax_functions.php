@@ -24,7 +24,6 @@ add_action('wp_ajax_sync_feed', function () {
     }
 
     foreach ($fbAccount['pages'] as $page) {
-
         $mediaRequest = $fbClient->get('/' . $page['ig_user_id'] . '/media?limit=20', $fbAccount['access_token']);
         $mediaResponse = json_decode($mediaRequest->getBody())->data;
 
