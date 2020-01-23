@@ -1,9 +1,16 @@
 <?php
 add_action('wp_ajax_sync_feed', function () {
-    $fbConnector = new FacebookApiConnector();
+    $helpers = new SwIgPlugin\SWIGHelpers();
+
+    if (!current_user_can('publish_posts')) {
+        $helpers->addMessageError('Sorry, you do not have the right privileges');
+        echo wp_json_encode(['success' => false]);
+        wp_die();
+    }
+
+    $fbConnector = new SwIgPlugin\FacebookApiConnector();
     $fbClient = $fbConnector->getClient();
 
-    $helpers = new SWIGHelpers();
     $settings = $helpers->getPluginSettings();
 
     $accessToken = $_POST['access_token'];
@@ -63,13 +70,13 @@ add_action('wp_ajax_sync_feed', function () {
         }
     }
     echo wp_json_encode(['success' => true]);
-    exit;
+    wp_die();
 });
 
 add_action('wp_ajax_clean_admin_notices', function () {
     update_option('sw-ig-errors', []);
     echo wp_json_encode(['success' => true]);
-    exit;
+    wp_die();
 });
 
 function saveIGCustomFields($mediaItem, $postId)
@@ -89,7 +96,7 @@ function saveIGCustomFields($mediaItem, $postId)
 
 function imageExists($mediaItem)
 {
-    $helpers = new SWIGHelpers();
+    $helpers = new SwIgPlugin\SWIGHelpers();
     $settings = $helpers->getPluginSettings();
     $alreadyInSystem = new WP_Query(
         [
@@ -98,8 +105,8 @@ function imageExists($mediaItem)
             'no_found_rows' => true,
             'meta_query' => [
                 [
-                    'key' => 'instagram_created_time',
-                    'value' => $mediaItem->timestamp
+                    'key' => 'instagram_id',
+                    'value' => $mediaItem->id
                 ]
             ]
         ]
@@ -129,12 +136,14 @@ function saveImageToUploads($mediaUrl, $helpers)
 
     if (is_wp_error($response)) {
         $helpers->addMessageError($response->get_error_message());
+        wp_die();
     }
 
     $mediaUrlCleaned = preg_replace('/\?.*/', '', basename($mediaUrl));
     $upload = wp_upload_bits($mediaUrlCleaned, null, $response['body']);
     if (!empty($upload['error'])) {
         $helpers->addMessageError('An error ocurred during the image import to the media library');
+        wp_die();
     }
     return $upload;
 }

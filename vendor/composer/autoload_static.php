@@ -11,6 +11,10 @@ class ComposerStaticInitf37ac10934468204542f64733249a4d9
     );
 
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'SwIgPlugin\\' => 11,
+        ),
         'F' => 
         array (
             'Facebook\\' => 9,
@@ -18,6 +22,10 @@ class ComposerStaticInitf37ac10934468204542f64733249a4d9
     );
 
     public static $prefixDirsPsr4 = array (
+        'SwIgPlugin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib',
+        ),
         'Facebook\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',

@@ -1,18 +1,20 @@
 <?php
 
+namespace SwIgPlugin;
+
 class FacebookApiConnector
 {
-    protected $appId = '';
-    protected $appSecret = '';
-    protected $graphVersion = 'v2.10';
+    private $appId = '';
+    private $appSecret = '';
+    private $graphVersion = 'v2.10';
 
     public function __construct()
     {
-        if (defined('FB_APP_ID')) {
-            $this->appId = FB_APP_ID;
+        if (defined('SW_IG_FB_APP_ID')) {
+            $this->appId = SW_IG_FB_APP_ID;
         }
-        if (defined('FB_APP_SECRET')) {
-            $this->appSecret = FB_APP_SECRET;
+        if (defined('SW_IG_FB_APP_SECRET')) {
+            $this->appSecret = SW_IG_FB_APP_SECRET;
         }
     }
 

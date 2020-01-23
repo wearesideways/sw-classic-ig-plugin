@@ -3,5 +3,10 @@
     "type": "project",
     "require": {
         "facebook/graph-sdk": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "SwIgPlugin\\": "lib/"
+        }
     }
 }

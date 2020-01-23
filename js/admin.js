@@ -12,9 +12,12 @@ jQuery(function ($) {
       ig: $button.data('access-token')
     };
 
-    var onSuccess = function (data) {
+    let onSuccess = () => {
       $button.removeAttr('disabled');
       $msgStatus.html('Done!');
+      setTimeout(function () {
+        location.reload();
+      }, 1000)
     };
 
     ajaxRequest(body, onSuccess);
@@ -26,8 +29,8 @@ jQuery(function ($) {
     ajaxRequest(body, null);
   });
 
-  function ajaxRequest(body, onSuccess) {
-    const pluginAjaxUrl = location.protocol + '//' + window.location.hostname + '/wp-admin/admin-ajax.php';
+  const ajaxRequest = (body, onSuccess) => {
+    const pluginAjaxUrl = vars.ajaxurl;
 
     $.ajax({
       url: pluginAjaxUrl,

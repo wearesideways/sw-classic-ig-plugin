@@ -1,5 +1,7 @@
 <?php
 
+namespace SwIgPlugin;
+
 class LoginCallbackHandler
 {
     public static function handleCallback()
@@ -55,11 +57,11 @@ class LoginCallbackHandler
                 unset($settingsArgs['accounts'][$index]);
             }
         }
+        $settingsArgs['accounts'] = array_values($settingsArgs['accounts']);
 
         //Get User Pages
         $pagesRequest = $fbClient->get('/' . $userAccount['id'] . '/accounts', $userAccount['access_token']);
         $pagesResponse = json_decode($pagesRequest->getBody());
-
 
         foreach ($pagesResponse->data as $key => $page) {
             //Get Instagram USER ID
@@ -70,7 +72,6 @@ class LoginCallbackHandler
             if (isset($IGUserResponse->instagram_business_account)) {
                 $userAccount['pages'][$key]['id'] = $page->id;
                 $userAccount['pages'][$key]['name'] = $page->name;
-                // $userAccount['pages'][$key]['access_token'] = $page->access_token; // Is this required?
                 $userAccount['pages'][$key]['ig_user_id'] = $IGUserResponse->instagram_business_account->id;
                 $userAccount['pages'][$key]['ig_username'] = $IGUserResponse->instagram_business_account->username;
             }
@@ -79,8 +80,7 @@ class LoginCallbackHandler
 
         update_option('sw-ig-settings', $settingsArgs);
 
-        echo '<script>window.location.href = "/wp-admin/options-general.php?page=sw-classic-ig-admin-page"</script>';
+        echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";
         exit;
-
     }
 }

@@ -21,7 +21,7 @@ if (!defined('SW_IG_PLUGIN_URL')) {
 }
 
 if (!defined('SW_IG_ADMIN_PAGE_URL')) {
-    define('SW_IG_ADMIN_PAGE_URL', home_url('wp-admin/options-general.php?page=sw-classic-ig-admin-page', 'https'));
+    define('SW_IG_ADMIN_PAGE_URL', admin_url('options-general.php?page=sw-classic-ig-admin-page', 'https'));
 }
 
 if (!defined('SW_IG_REMOVE_HASHTAGS')) {
@@ -29,7 +29,10 @@ if (!defined('SW_IG_REMOVE_HASHTAGS')) {
 }
 
 add_action('admin_enqueue_scripts', function () {
-    wp_enqueue_script('sw_ig_plugin_instagram_scripts', SW_IG_PLUGIN_URL . 'js/admin.js', ['jquery'], '1.0.0', false);
+    $vars = ['ajaxurl' => admin_url('admin-ajax.php')];
+    wp_register_script('sw_ig_plugin_instagram_scripts', SW_IG_PLUGIN_URL . 'js/admin.js', ['jquery'], '1.0.0', false);
+    wp_localize_script('sw_ig_plugin_instagram_scripts', 'vars', $vars);
+    wp_enqueue_script('sw_ig_plugin_instagram_scripts');
     wp_enqueue_style('sw_ig_plugin_instagram_style', SW_IG_PLUGIN_URL . 'css/admin.css', [], '1.0.0');
 });
 
@@ -48,9 +51,6 @@ add_action('admin_notices', function () {
 
 require dirname(__FILE__) . '/vendor/autoload.php';
 require dirname(__FILE__) . '/lib/ajax_functions.php';
-require dirname(__FILE__) . '/lib/SWIGHelpers.php';
-require dirname(__FILE__) . '/lib/FacebookApiSettings.php';
-require dirname(__FILE__) . '/lib/FacebookApiConnector.php';
 
 if (is_admin()) {
     add_action('admin_menu', function () {
@@ -62,8 +62,7 @@ if (is_admin()) {
                 <?php
                 $isLoginCallback = isset($_GET['fb_login_callback']);
                 if ($isLoginCallback) {
-                    require dirname(__FILE__) . '/lib/LoginCallbackHandler.php';
-                    LoginCallbackHandler::handleCallback();
+                    SwIgPlugin\LoginCallbackHandler::handleCallback();
                 } else {
                     require dirname(__FILE__) . '/pages/main.php';
                 }

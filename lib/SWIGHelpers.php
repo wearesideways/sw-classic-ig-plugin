@@ -1,5 +1,7 @@
 <?php
 
+namespace SwIgPlugin;
+
 class SWIGHelpers
 {
     public function getPluginSettings()

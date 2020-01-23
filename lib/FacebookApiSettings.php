@@ -1,5 +1,7 @@
 <?php
 
+namespace SwIgPlugin;
+
 class FacebookApiSettings
 {
     public function getLoginPermissions()
@@ -16,6 +18,4 @@ class FacebookApiSettings
     {
         return add_query_arg(['fb_login_callback' => true], SW_IG_ADMIN_PAGE_URL);
     }
-
-
 }

@@ -5,16 +5,16 @@ Custom Wordpress plugin to import Instagram posts to WP posts (This is a replace
 ### Configuration Vars
 You must define following keys to be able to connect with the FB Graph API:
 
-`define('FB_APP_ID', 'XXXX');`
+`define('SW_IG_FB_APP_ID', 'XXXX');`
 
-`define('FB_APP_SECRET', 'XXXXX');`
+`define('SW_IG_FB_APP_SECRET', 'XXXXX');`
 
 ### Plugin Settings
- For now you can set different settings by project, you must define them on your local-config.php (or wp-config.php) file:
+ You can set different settings by project, you must define them on your local-config.php (or wp-config.php) file:
  
 - Post Type Name: `define('SW_IG_POST_TYPE', 'instagram')`
 - Default Post Status: `define('SW_IG_POST_STATUS', 'publish')`
-- On/Off to remove hashtags from title: `define('SW_IG_REMOVE_HASHTAGS', false)`
+- On/Off to remove hashtags from title (dsgnwrks remove from post_title, post_content, post_excerpt): `define('SW_IG_REMOVE_HASHTAGS', false)`
 
 ### Features
 - Plugin settings page to login and sync feed.
