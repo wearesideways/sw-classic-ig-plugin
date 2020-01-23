@@ -11,10 +11,10 @@ class LoginCallbackHandler
         $fbClient = $fbConnector->getClient();
         $SWIGhelpers = new SWIGHelpers();
 
-        $helper = $fbClient->getRedirectLoginHelper();
-        $helper->getPersistentDataHandler()->set('state', base64_encode($fbSettings->getRedirectCallbackUrl()));
-
         try {
+            $helper = $fbClient->getRedirectLoginHelper();
+            $helper->getPersistentDataHandler()->set('state', base64_encode($fbSettings->getRedirectCallbackUrl()));
+
             $accessToken = $helper->getAccessToken($fbSettings->getCallbackUrl());
 
             // The OAuth 2.0 client handler helps us manage access tokens
@@ -68,13 +68,15 @@ class LoginCallbackHandler
             echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";
             wp_die();
 
-        } catch (Facebook\Exceptions\FacebookResponseException $e) {
+        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
             // When Graph returns an error
             $SWIGhelpers->addMessageError('Graph returned an error: ' . $e->getMessage());
+            echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";
             wp_die();
-        } catch (Facebook\Exceptions\FacebookSDKException $e) {
+        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
             // When validation fails or other local issues
             $SWIGhelpers->addMessageError('Facebook SDK returned an error: ' . $e->getMessage());
+            echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";
             wp_die();
         }
     }
