@@ -54,7 +54,7 @@ class LoginCallbackHandler
                 $IGUserRequest = $fbClient->get('/' . $page->id . '?fields=instagram_business_account{id,username}', $userAccount['access_token']);
                 $IGUserResponse = json_decode($IGUserRequest->getBody());
 
-                //We add the pages just if the FB Page has an IG page linked
+                //If the FB Page has an IG page linked
                 if (isset($IGUserResponse->instagram_business_account)) {
                     $userAccount['pages'][$key]['id'] = $page->id;
                     $userAccount['pages'][$key]['name'] = $page->name;
