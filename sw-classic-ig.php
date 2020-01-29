@@ -1,9 +1,9 @@
 <?php
 
 /*
-Plugin Name: SW Classic Instagram Sync
-Description: Sync Instagram posts for SW Classic projects
-Version:     0.1.0
+Plugin Name: Instagram Settings
+Description: Sync Instagram feed
+Version:     0.9.0
 Author:     SW Dev Team
 */
 
@@ -24,7 +24,7 @@ if (!defined('SW_IG_PLUGIN_URL')) {
 }
 
 if (!defined('SW_IG_ADMIN_PAGE_URL')) {
-    define('SW_IG_ADMIN_PAGE_URL', admin_url('options-general.php?page=sw-classic-ig-admin-page', 'https'));
+    define('SW_IG_ADMIN_PAGE_URL', admin_url('options-general.php?page=instagram-settings', 'https'));
 }
 
 if (!defined('SW_IG_REMOVE_HASHTAGS')) {
@@ -43,7 +43,7 @@ add_action('admin_notices', function () {
     $screen = get_current_screen();
     $errors = get_option('sw-ig-errors', []);
 
-    if ($screen->id == 'settings_page_sw-classic-ig-admin-page' && !empty($errors)) {
+    if ($screen->id == 'settings_page_instagram-settings' && !empty($errors)) {
         echo "<div id='sw-ig-admin-notices' class='notice notice-error is-dismissible'><ul>";
         foreach ($errors as $error) {
             echo "<li>- $error</li>";
@@ -54,10 +54,10 @@ add_action('admin_notices', function () {
 
 if (is_admin()) {
     add_action('admin_menu', function () {
-        add_options_page('SW Classic IG Page', 'SW Classic IG Settings', 'manage_options', 'sw-classic-ig-admin-page', function () {
+        add_options_page('Instagram Settings', 'Instagram Settings', 'manage_options', 'instagram-settings', function () {
             ?>
             <div class="wrap">
-                <h1>SW Classic Instagram Plugin Options</h1>
+                <h1>Instagram Plugin Settings</h1>
 
                 <?php
                 $isLoginCallback = isset($_GET['fb_login_callback']);

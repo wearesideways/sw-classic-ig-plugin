@@ -12,12 +12,12 @@ $loginUrl = $fbConnector->getLoginUrl();
 
 echo '<a href="' . htmlspecialchars($loginUrl) . '" id="sw-ig-login-button"><img src="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/OF6ddsGKpeB.png" alt="">Connect new Facebook Account</a>';
 
-$removeHashtags = SW_IG_REMOVE_HASHTAGS ? 'yes' : 'no';
-echo "<table class='form-table'>
-<tr><th>Default Post Type</th><td>" . $settings['post_type'] . "</td></tr>
-<tr><th>Default Post Status</th><td>" . $settings['post_status'] . "</td></tr>
-<tr><th>Should remove hashtags?</th><td>" . $removeHashtags . "</td></tr>
-</table>";
+//$removeHashtags = SW_IG_REMOVE_HASHTAGS ? 'yes' : 'no';
+//echo "<table class='form-table'>
+//<tr><th>Default Post Type</th><td>" . $settings['post_type'] . "</td></tr>
+//<tr><th>Default Post Status</th><td>" . $settings['post_status'] . "</td></tr>
+//<tr><th>Should remove hashtags?</th><td>" . $removeHashtags . "</td></tr>
+//</table>";
 
 echo "<h3 class='section-title'>Connected Accounts</h3>";
 
@@ -30,9 +30,9 @@ if (!empty($settings['accounts'])) {
             foreach ($account['pages'] as $page) {
                 echo "<span>" . $page['ig_username'] . "</span>";
             }
-            echo "</div></div>
-            <button type='button' class='button-primary' id='sw-ig-plugin-sync-feed'
-                    data-access-token='" . $account['access_token'] . "'>Import Instagram Posts</button>";
+            echo "</div></div>";
+//            <button type='button' class='button-primary' id='sw-ig-plugin-sync-feed'
+//                    data-access-token='" . $account['access_token'] . "'>Import Instagram Posts</button>";
         } else {
             echo "<span>No Instagram Accounts Linked</span></div></div>";
         }
