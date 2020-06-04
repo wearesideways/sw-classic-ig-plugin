@@ -23,8 +23,8 @@
   display: inline-block;
 }
 
-#sw-ig-plugin-sync-feed {
-  margin-right: 30px;
+.sw-ig-plugin-sync-feed {
+  margin-right: 30px !important;
 }
 
 .sw-ig-account-panel {

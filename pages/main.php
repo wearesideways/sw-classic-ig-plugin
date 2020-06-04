@@ -30,9 +30,9 @@ if (!empty($settings['accounts'])) {
             foreach ($account['pages'] as $page) {
                 echo "<span>" . $page['ig_username'] . "</span>";
             }
-            echo "</div></div>";
-//            <button type='button' class='button-primary' id='sw-ig-plugin-sync-feed'
-//                    data-access-token='" . $account['access_token'] . "'>Import Instagram Posts</button>";
+            echo "</div></div>
+            <button type='button' class='button-primary sw-ig-plugin-sync-feed'
+                    data-access-token='" . $account['access_token'] . "'>Import Instagram Posts</button>";
         } else {
             echo "<span>No Instagram Accounts Linked</span></div></div>";
         }

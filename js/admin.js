@@ -1,10 +1,10 @@
 jQuery(function ($) {
-  $('#sw-ig-plugin-sync-feed').click(function () {
+  $('.sw-ig-plugin-sync-feed').click(function () {
     const $button = $(this),
       $msgStatus = $button.next('.sw-ig-account-panel-status');
 
     $button.attr('disabled', 'disabled');
-    $msgStatus.html('Importing...');
+    $msgStatus.html('Importing... This could take a while');
 
     const body = {
       action: 'sync_feed',
@@ -17,10 +17,15 @@ jQuery(function ($) {
       $msgStatus.html('Done!');
       setTimeout(function () {
         location.reload();
-      }, 1000)
+      }, 2000)
     };
 
-    ajaxRequest(body, onSuccess);
+    let onError = () => {
+      $button.removeAttr('disabled');
+      $msgStatus.html('There was an issue during the import, try again.');
+    };
+
+    ajaxRequest(body, onSuccess, onError);
   })
 
   $(document).on('click', '#sw-ig-admin-notices .notice-dismiss', function () {
@@ -29,14 +34,15 @@ jQuery(function ($) {
     ajaxRequest(body, null);
   });
 
-  const ajaxRequest = (body, onSuccess) => {
+  const ajaxRequest = (body, onSuccess, onError = null) => {
     const pluginAjaxUrl = vars.ajaxurl;
 
     $.ajax({
       url: pluginAjaxUrl,
       method: 'POST',
       data: body,
-      success: onSuccess
+      success: onSuccess,
+      error: onError
     });
   }
 });

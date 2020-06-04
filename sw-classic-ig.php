@@ -3,7 +3,7 @@
 /*
 Plugin Name: Instagram Settings
 Description: Sync Instagram feed
-Version:     0.9.0
+Version:     0.9.9
 Author:     SW Dev Team
 */
 
@@ -36,7 +36,7 @@ add_action('admin_enqueue_scripts', function () {
     $vars = ['ajaxurl' => admin_url('admin-ajax.php')];
     wp_localize_script('sw_ig_plugin_instagram_scripts', 'vars', $vars);
     wp_enqueue_script('sw_ig_plugin_instagram_scripts');
-    wp_enqueue_style('sw_ig_plugin_instagram_style', SW_IG_PLUGIN_URL . 'css/admin.css', [], '1.0.0');
+    wp_enqueue_style('sw_ig_plugin_instagram_style', SW_IG_PLUGIN_URL . '/css/admin.css', [], '1.0.0');
 });
 
 add_action('admin_notices', function () {

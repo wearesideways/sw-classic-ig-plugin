@@ -6,8 +6,7 @@ class FacebookApiSettings
 {
     public function getLoginPermissions()
     {
-        //pages_read_user_content -- consider this if you have issues with permissions
-        return ['instagram_basic, pages_show_list'];
+        return ['instagram_basic, pages_show_list, pages_read_engagement'];
     }
 
     public function getCallbackUrl()
