@@ -27,3 +27,5 @@ You must define following keys to be able to connect with the FB Graph API:
     - Set custom posts type name
     - Set default status post
     - Set on/off remove hashtags on IG posts title
+- WP Cron Job for daily automatic imports
+    - This will import from all the configured accounts

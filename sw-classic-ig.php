@@ -3,8 +3,8 @@
 /*
 Plugin Name: Instagram Settings
 Description: Sync Instagram feed
-Version:     0.9.9
-Author:     SW Dev Team
+Version:     1.0.0
+Author:      SW Dev Team
 */
 
 if (!defined('ABSPATH')) {
@@ -15,7 +15,7 @@ require dirname(__FILE__) . '/vendor/autoload.php';
 require dirname(__FILE__) . '/lib/ajax_functions.php';
 
 //************************************************************************************
-// This remove a filter from ACF plugin to hide the default custom fields box
+// This removes the filter from ACF plugin which hides the default custom fields box
 add_filter('acf/settings/remove_wp_meta_box', '__return_false');
 //************************************************************************************
 
@@ -74,4 +74,7 @@ if (is_admin()) {
         });
     });
 }
+
+$scheduledTasks = new SwIgPlugin\ScheduledTasks();
+$scheduledTasks->init_tasks();
 ?>
