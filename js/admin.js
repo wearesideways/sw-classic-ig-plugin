@@ -12,24 +12,30 @@ jQuery(function ($) {
       ig: $button.data('access-token')
     };
 
-    let onSuccess = () => {
-      $button.removeAttr('disabled');
-      $msgStatus.html('Done!');
-      setTimeout(function () {
-        location.reload();
-      }, 2000)
+    let onSuccess = (response) => {
+      console.log(response)
+      if (JSON.parse(response).success === true) {
+        $button.removeAttr('disabled');
+        $msgStatus.html('Done!');
+      } else {
+        onError()
+      }
     };
 
     let onError = () => {
       $button.removeAttr('disabled');
       $msgStatus.html('There was an issue during the import, try again.');
+
+      setTimeout(function () {
+        location.reload();
+      }, 4000)
     };
 
     ajaxRequest(body, onSuccess, onError);
   })
 
   $(document).on('click', '#sw-ig-admin-notices .notice-dismiss', function () {
-    const body = {action: 'clean_admin_notices'};
+    const body = { action: 'clean_admin_notices' };
 
     ajaxRequest(body, null);
   });
