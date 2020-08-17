@@ -3,9 +3,9 @@
 namespace SwIgPlugin;
 
 class PostsImporter {
-    protected $helpers;
-    protected $fbConnector;
-    protected $settings;
+    private $helpers;
+    private $fbConnector;
+    private $settings;
 
     public function __construct() {
         $this->helpers     = new SWIGHelpers();
@@ -20,7 +20,6 @@ class PostsImporter {
             if ( isset( $fbAccount['pages'] ) ) {
                 if ( !$this->import_ig_posts( $fbAccount, $isCron ) ) {
                     return false;
-                    break;
                 }
             }
         }
@@ -87,7 +86,7 @@ class PostsImporter {
         return true;
     }
 
-    protected function imageExists( $mediaItem ) {
+    private function imageExists( $mediaItem ) {
         $alreadyImported = new \WP_Query(
             [
                 'post_type'     => $this->settings['post_type'],
@@ -104,7 +103,7 @@ class PostsImporter {
         return $alreadyImported->have_posts();
     }
 
-    protected function removeHashtags( $string ) {
+    private function removeHashtags( $string ) {
         $hashtagPattern = '/(^|[^0-9A-Z&\/\?]+)([#＃]+)([0-9A-Z_]*[A-Z_]+[a-z0-9_üÀ-ÖØ-öø-ÿ]*)/iu';
         $cleanContent   = trim( preg_replace( $hashtagPattern, '', $string ) );
 
@@ -112,7 +111,7 @@ class PostsImporter {
         return empty( $cleanContent ) ? trim( str_replace( '#', '', $string ) ) : $cleanContent;
     }
 
-    protected function saveImageToUploads( $mediaUrl ) {
+    private function saveImageToUploads( $mediaUrl ) {
         if ( !class_exists( 'WP_Http' ) ) {
             include_once ABSPATH . WPINC . '/class-http.php';
         }
