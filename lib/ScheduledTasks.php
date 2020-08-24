@@ -16,9 +16,6 @@ class ScheduledTasks {
     }
 
     protected function ig_import_newest_posts() {
-        $helpers = new SWIGHelpers();
-        $helpers->sendNotification( 'The import all IG posts task was executed');
-
         $importer = new PostsImporter();
         $importer->fetch_from_all_accounts(true);
     }
