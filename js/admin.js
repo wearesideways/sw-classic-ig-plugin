@@ -13,7 +13,6 @@ jQuery(function ($) {
     };
 
     let onSuccess = (response) => {
-      console.log(response)
       if (JSON.parse(response).success === true) {
         $button.removeAttr('disabled');
         $msgStatus.html('Done!');

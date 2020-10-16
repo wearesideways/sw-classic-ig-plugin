@@ -28,6 +28,7 @@ class PostsImporter {
 
     public function import_ig_posts( $fbAccount, $isCron = false ) {
         $fbClient = $this->fbConnector->getClient();
+        remove_all_filters('wp_generate_attachment_metadata');
 
         foreach ( $fbAccount['pages'] as $page ) {
             $mediaRequest  = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=id,media_type,media_url,caption,permalink,timestamp,username&limit=20', $fbAccount['access_token'] );
@@ -78,7 +79,6 @@ class PostsImporter {
                     update_post_meta( $attachId, '_wp_attachment_image_alt', $title );
 
                     $this->saveIGCustomFields( $mediaItem, $postId );
-
                 }
             }
         }
