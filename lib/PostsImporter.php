@@ -29,9 +29,10 @@ class PostsImporter {
     public function import_ig_posts( $fbAccount, $isCron = false ) {
         $fbClient = $this->fbConnector->getClient();
         remove_all_filters('wp_generate_attachment_metadata');
+        $mediaFields = 'id,media_type,media_url,caption,permalink,timestamp,username';
 
         foreach ( $fbAccount['pages'] as $page ) {
-            $mediaRequest  = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=id,media_type,media_url,caption,permalink,timestamp,username&limit=20', $fbAccount['access_token'] );
+            $mediaRequest = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=' . $mediaFields . '&limit=20', $fbAccount['access_token'] );
             $mediaResponse = json_decode( $mediaRequest->getBody() )->data;
 
             foreach ( $mediaResponse as $mediaItem ) {
