@@ -28,23 +28,29 @@ class PostsImporter {
 
     public function import_ig_posts( $fbAccount, $isCron = false ) {
         $fbClient = $this->fbConnector->getClient();
+        $mediaFields = 'id,media_type,media_url,caption,permalink,timestamp,username';
+
+        // Removes the WP_Smush plugin filter hook which optimizes the size of the image files
+        if ( class_exists( 'WP_Smush' ) ) {
+            $smushMod = \WP_Smush::get_instance()->core()->mod;
+            remove_filter( 'wp_generate_attachment_metadata', [ $smushMod->smush, 'smush_image' ], 15 );
+        }
 
         foreach ( $fbAccount['pages'] as $page ) {
-            $mediaRequest  = $fbClient->get( '/' . $page['ig_user_id'] . '/media?limit=20', $fbAccount['access_token'] );
+            $mediaRequest = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=' . $mediaFields . '&limit=20', $fbAccount['access_token'] );
             $mediaResponse = json_decode( $mediaRequest->getBody() )->data;
 
-            foreach ( $mediaResponse as $media ) {
-                $getMediaItem = $fbClient->get( '/' . $media->id . '?fields=id,media_type,media_url,caption,permalink,timestamp,username', $fbAccount['access_token'] );
-                $mediaItem    = json_decode( $getMediaItem->getBody() );
-
+            foreach ( $mediaResponse as $mediaItem ) {
                 if ( !$this->imageExists( $mediaItem ) && $mediaItem->media_type === 'IMAGE' ) {
                     $title = SW_IG_REMOVE_HASHTAGS ? $this->removeHashtags( $mediaItem->caption ) : $mediaItem->caption;
 
                     $newPostArgs = [
-                        'post_title'  => $title,
+                        'post_title'  => substr( $title, 0, 100 ),
                         'post_type'   => $this->settings['post_type'],
                         'post_status' => $this->settings['post_status'],
+                        'post_name'   => substr( $title, 0, 20 ), // slug
                     ];
+
                     $postId      = wp_insert_post( $newPostArgs );
 
                     if ( !$upload = $this->saveImageToUploads( $mediaItem->media_url ) ) {
@@ -56,6 +62,7 @@ class PostsImporter {
                         return false;
                     }
 
+                    include_once( ABSPATH . 'wp-admin/includes/image.php' );
                     $filepath = $upload['file'];
                     $filename = basename( $filepath );
 
@@ -78,7 +85,6 @@ class PostsImporter {
                     update_post_meta( $attachId, '_wp_attachment_image_alt', $title );
 
                     $this->saveIGCustomFields( $mediaItem, $postId );
-
                 }
             }
         }
