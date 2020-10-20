@@ -28,8 +28,13 @@ class PostsImporter {
 
     public function import_ig_posts( $fbAccount, $isCron = false ) {
         $fbClient = $this->fbConnector->getClient();
-        remove_all_filters('wp_generate_attachment_metadata');
         $mediaFields = 'id,media_type,media_url,caption,permalink,timestamp,username';
+
+        // Removes the WP_Smush plugin filter hook which optimizes the size of the image files
+        if ( class_exists( 'WP_Smush' ) ) {
+            $smushMod = \WP_Smush::get_instance()->core()->mod;
+            remove_filter( 'wp_generate_attachment_metadata', [ $smushMod->smush, 'smush_image' ], 15 );
+        }
 
         foreach ( $fbAccount['pages'] as $page ) {
             $mediaRequest = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=' . $mediaFields . '&limit=20', $fbAccount['access_token'] );
