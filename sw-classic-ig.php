@@ -3,7 +3,7 @@
 /*
 Plugin Name: Instagram Settings
 Description: Sync Instagram feed
-Version:     1.1.0
+Version:     1.2.0
 Author:      SW Dev Team
 */
 
@@ -73,8 +73,33 @@ if (is_admin()) {
             <?php
         });
     });
+
+    // Register settings page link under the plugins view
+    add_filter(
+        'plugin_action_links',
+        function ( $links, $file ) {
+            $url  = menu_page_url( 'instagram-settings', false );
+            $text = 'Settings';
+
+            $settings_link = '<a href="' . $url . '">' . esc_html( $text ) . '</a>';
+
+            if ( $file == plugin_basename( __FILE__ ) ) {
+                array_unshift( $links, $settings_link );
+            }
+
+            return $links;
+        },
+        10,
+        2
+    );
 }
 
-$scheduledTasks = new SwIgPlugin\ScheduledTasks();
-$scheduledTasks->init_tasks();
+$helpers  = new SwIgPlugin\SWIGHelpers();
+$settings = $helpers->getPluginSettings();
+
+if ( $settings['autosync_enabled'] ) {
+    $scheduledTasks = new SwIgPlugin\ScheduledTasks();
+    $scheduledTasks->init_tasks();
+}
+
 ?>

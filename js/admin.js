@@ -39,6 +39,19 @@ jQuery(function ($) {
     ajaxRequest(body, null);
   });
 
+  $('#sw-ig-autosync-field').click(function () {
+    const body = {
+      action: 'update_autosync_option',
+      autosync: this.checked,
+    };
+
+    let onError = () => {
+      alert('There was an issue during settings update. Try again.')
+    };
+
+    ajaxRequest(body, null, onError);
+  })
+
   const ajaxRequest = (body, onSuccess, onError = null) => {
     const pluginAjaxUrl = vars.ajaxurl;
 

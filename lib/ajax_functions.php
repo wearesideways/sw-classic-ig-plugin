@@ -32,3 +32,15 @@ add_action('wp_ajax_clean_admin_notices', function () {
     echo wp_json_encode(['success' => true]);
     wp_die();
 });
+
+add_action('wp_ajax_update_autosync_option', function () {
+    $helpers  = new SwIgPlugin\SWIGHelpers();
+    $settings = $helpers->getPluginSettings();
+    $newValue = $_POST['autosync'] === 'true';
+
+    $settings['autosync_enabled'] = $newValue;
+    update_option( 'sw-ig-settings', $settings );
+
+    echo wp_json_encode( [ 'success' => true ] );
+    wp_die();
+});
