@@ -9,9 +9,13 @@ class ScheduledTasks {
     }
 
     public function init_tasks() {
-        if ( !wp_next_scheduled( 'ig_import_newest_posts_job' ) ) {
+        $helpers  = new SWIGHelpers();
+        $settings = $helpers->getPluginSettings();
+
+        if ( $settings['autosync_enabled'] && ! wp_next_scheduled( 'ig_import_newest_posts_job' ) ) {
             return wp_schedule_event( strtotime( '09:00:00' ), 'daily', 'ig_import_newest_posts_job' );
         }
+
         return true;
     }
 

@@ -64,7 +64,7 @@ if (is_admin()) {
                 if ($isLoginCallback) {
                     SwIgPlugin\LoginCallbackHandler::handleCallback();
                 } else {
-                    require dirname(__FILE__) . '/pages/main.php';
+                    require dirname( __FILE__ ) . '/pages/main.php';
                 }
                 ?>
 
@@ -94,12 +94,7 @@ if (is_admin()) {
     );
 }
 
-$helpers  = new SwIgPlugin\SWIGHelpers();
-$settings = $helpers->getPluginSettings();
-
-if ( $settings['autosync_enabled'] ) {
-    $scheduledTasks = new SwIgPlugin\ScheduledTasks();
-    $scheduledTasks->init_tasks();
-}
+$scheduledTasks = new SwIgPlugin\ScheduledTasks();
+$scheduledTasks->init_tasks();
 
 ?>
