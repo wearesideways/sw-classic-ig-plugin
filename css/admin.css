@@ -56,6 +56,20 @@
   text-transform: lowercase;
 }
 
-.section-title{
-  margin-top: 35px;
+.sw-ig-section-title {
+  margin-top: 10px;
+}
+
+.sw-ig-settings-block {
+  display: block;
+  padding: 35px 0;
+}
+
+.sw-ig-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sw-ig-checkbox {
+  margin: 0 0 0 20px !important;
 }

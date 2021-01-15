@@ -10,7 +10,7 @@ You must define following keys to be able to connect with the FB Graph API:
 `define('SW_IG_FB_APP_SECRET', 'XXXXX');`
 
 ### Plugin Settings
- You can set different settings by project, you must define them on your local-config.php (or wp-config.php) file:
+You can set different settings by project, you must define them on your local-config.php (or wp-config.php) file:
  
 - Post Type Name: `define('SW_IG_POST_TYPE', 'instagram')`
 - Default Post Status: `define('SW_IG_POST_STATUS', 'publish')`
@@ -27,5 +27,6 @@ You must define following keys to be able to connect with the FB Graph API:
     - Set custom posts type name
     - Set default status post
     - Set on/off remove hashtags on IG posts title
-- WP Cron Job for daily automatic imports
+- Setting to enable or disable WP Cron Job for daily automatic imports
     - This will import from all the configured accounts
+- In WP multisites, there will be a configuration page by each subsite

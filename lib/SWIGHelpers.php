@@ -5,9 +5,10 @@ namespace SwIgPlugin;
 class SWIGHelpers {
     public function getPluginSettings() {
         $defaults = [
-            'post_type'   => 'instagram',
-            'post_status' => 'publish',
-            'accounts'    => []
+            'post_type'        => 'instagram',
+            'post_status'      => 'publish',
+            'accounts'         => [],
+            'autosync_enabled' => false,
         ];
 
         $savedSettings = get_option( 'sw-ig-settings', [] );

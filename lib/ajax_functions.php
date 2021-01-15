@@ -23,12 +23,22 @@ add_action('wp_ajax_sync_feed', function () {
     $importer = new SwIgPlugin\PostsImporter();
     $importStatus = $importer->import_ig_posts( $fbAccount );
 
-    echo wp_json_encode(['success' => (bool) $importStatus]);
-    wp_die();
+    wp_send_json(['success' => (bool) $importStatus]);
 });
 
 add_action('wp_ajax_clean_admin_notices', function () {
     update_option('sw-ig-errors', []);
-    echo wp_json_encode(['success' => true]);
-    wp_die();
+
+    wp_send_json([ 'success' => true ]);
+});
+
+add_action('wp_ajax_update_autosync_option', function () {
+    $helpers  = new SwIgPlugin\SWIGHelpers();
+    $settings = $helpers->getPluginSettings();
+    $newValue = $_POST['autosync'] === 'true';
+
+    $settings['autosync_enabled'] = $newValue;
+    update_option( 'sw-ig-settings', $settings );
+
+    wp_send_json([ 'success' => true ]);
 });

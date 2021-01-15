@@ -12,8 +12,8 @@ jQuery(function ($) {
       ig: $button.data('access-token')
     };
 
-    let onSuccess = (response) => {
-      if (JSON.parse(response).success === true) {
+    const onSuccess = (response) => {
+      if (response.success === true) {
         $button.removeAttr('disabled');
         $msgStatus.html('Done!');
       } else {
@@ -21,7 +21,7 @@ jQuery(function ($) {
       }
     };
 
-    let onError = () => {
+    const onError = () => {
       $button.removeAttr('disabled');
       $msgStatus.html('There was an issue during the import, try again.');
 
@@ -38,6 +38,15 @@ jQuery(function ($) {
 
     ajaxRequest(body, null);
   });
+
+  $('#sw-ig-autosync-field').click(function() {
+    const body = {
+      action: 'update_autosync_option',
+      autosync: this.checked,
+    }
+
+    ajaxRequest(body, null, () => alert('There was an issue during settings update. Try again.'))
+  })
 
   const ajaxRequest = (body, onSuccess, onError = null) => {
     const pluginAjaxUrl = vars.ajaxurl;
