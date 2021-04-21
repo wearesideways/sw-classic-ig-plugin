@@ -1,7 +1,7 @@
 {
     "name": "sidewaysnyc/sw-classic-ig",
     "description": "Sideways Instagram plugin",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "type": "wordpress-plugin",
     "license": "proprietary",
     "require": {

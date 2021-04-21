@@ -11,8 +11,7 @@ if (!defined('ABSPATH')) {
     die('Invalid Request');
 }
 
-require dirname(__FILE__) . '/vendor/autoload.php';
-require dirname(__FILE__) . '/lib/ajax_functions.php';
+require __DIR__ . '/lib/ajax_functions.php';
 
 //************************************************************************************
 // This removes the filter from ACF plugin which hides the default custom fields box
