@@ -1,8 +1,15 @@
 {
-    "name": "sideways/sw-classic-ig",
-    "type": "project",
+    "name": "sidewaysnyc/sw-classic-ig",
+    "description": "Sideways Instagram plugin",
+    "version": "2.0.0",
+    "type": "wordpress-plugin",
+    "license": "proprietary",
     "require": {
+        "php": ">=7.4",
         "facebook/graph-sdk": "^5.7"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
