@@ -23,7 +23,7 @@ class FacebookApiConnector
     public function getClient()
     {
         return new Facebook([
-            'app_id' => $this->appId,
+            'app_id' => (string)$this->appId,
             'app_secret' => $this->appSecret,
             'default_graph_version' => $this->graphVersion,
         ]);
