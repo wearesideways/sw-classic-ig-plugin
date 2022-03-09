@@ -27,7 +27,7 @@ if (!defined('SW_IG_ADMIN_PAGE_URL')) {
 }
 
 if (!defined('SW_IG_REMOVE_HASHTAGS')) {
-    define('SW_IG_REMOVE_HASHTAGS', false);
+    define('SW_IG_REMOVE_HASHTAGS', true);
 }
 
 add_action('admin_enqueue_scripts', function () {

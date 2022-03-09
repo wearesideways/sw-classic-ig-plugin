@@ -2,6 +2,8 @@
 
 namespace SwIgPlugin;
 
+use JanuSoftware\Facebook\Facebook;
+
 class FacebookApiConnector
 {
     private $appId = '';
@@ -20,7 +22,7 @@ class FacebookApiConnector
 
     public function getClient()
     {
-        return new \Facebook\Facebook([
+        return new Facebook([
             'app_id' => $this->appId,
             'app_secret' => $this->appSecret,
             'default_graph_version' => $this->graphVersion,
