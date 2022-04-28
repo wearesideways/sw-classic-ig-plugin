@@ -18,7 +18,7 @@ class PostsImporter {
         foreach ( $this->settings['accounts'] as $fbAccount ) {
             // Validate if the FB account has IG pages linked
             if ( isset( $fbAccount['pages'] ) ) {
-                if ( !$this->import_ig_posts( $fbAccount, $isCron ) ) {
+                if ( !$this->import_ig_posts( $fbAccount, $isCron )['success'] ) {
                     return false;
                 }
             }
@@ -37,7 +37,18 @@ class PostsImporter {
         }
 
         foreach ( $fbAccount['pages'] as $page ) {
-            $mediaRequest = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=' . $mediaFields . '&limit=20', $fbAccount['access_token'] );
+            try{
+                $mediaRequest = $fbClient->get( '/' . $page['ig_user_id'] . '/media?fields=' . $mediaFields . '&limit=20', $fbAccount['access_token'] );
+            }
+            catch (\Exception $error) {
+                $this->helpers->sendNotification( $error->getMessage() );
+
+                if ( !$isCron ) {
+                    $this->helpers->addMessageError( $error->getMessage() );
+                }
+                return ['success' => false, 'message' => $error->getMessage()];
+            }
+
             $mediaResponse = json_decode( $mediaRequest->getBody() )->data;
 
             foreach ( $mediaResponse as $mediaItem ) {
@@ -59,7 +70,7 @@ class PostsImporter {
                         if ( !$isCron ) {
                             $this->helpers->addMessageError( 'An error ocurred during the media import' );
                         }
-                        return false;
+                        return ['success' => false, 'message' => 'An error ocurred during the media import'];
                     }
 
                     include_once( ABSPATH . 'wp-admin/includes/image.php' );
@@ -89,7 +100,7 @@ class PostsImporter {
             }
         }
 
-        return true;
+        return ['success' => true];
     }
 
     private function imageExists( $mediaItem ) {

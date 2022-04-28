@@ -17,11 +17,12 @@ jQuery(function ($) {
         $button.removeAttr('disabled');
         $msgStatus.html('Done!');
       } else {
-        onError()
+        onError(response)
       }
     };
 
-    const onError = () => {
+    const onError = (e) => {
+      console.error(e.message)
       $button.removeAttr('disabled');
       $msgStatus.html('There was an issue during the import, try again.');
 
