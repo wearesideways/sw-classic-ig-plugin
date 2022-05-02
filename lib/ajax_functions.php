@@ -21,9 +21,9 @@ add_action('wp_ajax_sync_feed', function () {
     }
 
     $importer = new SwIgPlugin\PostsImporter();
-    $importStatus = $importer->import_ig_posts( $fbAccount );
+    $importResponse = $importer->import_ig_posts( $fbAccount );
 
-    wp_send_json(['success' => (bool) $importStatus]);
+    wp_send_json($importResponse);
 });
 
 add_action('wp_ajax_clean_admin_notices', function () {
