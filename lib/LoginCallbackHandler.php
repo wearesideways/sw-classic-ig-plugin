@@ -2,8 +2,8 @@
 
 namespace SwIgPlugin;
 
-use JanuSoftware\Facebook\Exception\FacebookResponseException;
-use JanuSoftware\Facebook\Exception\FacebookSDKException;
+use JanuSoftware\Facebook\Exception\ResponseException;
+use JanuSoftware\Facebook\Exception\SDKException;
 
 class LoginCallbackHandler
 {
@@ -71,12 +71,12 @@ class LoginCallbackHandler
             echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";
             wp_die();
 
-        } catch (FacebookResponseException $e) {
+        } catch (ResponseException $e) {
             // When Graph returns an error
             $SWIGhelpers->addMessageError('Graph returned an error: ' . $e->getMessage());
             echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";
             wp_die();
-        } catch (FacebookSDKException $e) {
+        } catch (SDKException $e) {
             // When validation fails or other local issues
             $SWIGhelpers->addMessageError('Facebook SDK returned an error: ' . $e->getMessage());
             echo "<script>window.location.href = '" . SW_IG_ADMIN_PAGE_URL . "'</script>";

@@ -3,7 +3,7 @@
 /*
 Plugin Name: Instagram Settings
 Description: Sync Instagram feed
-Version:     2.0.0
+Version:     3.1.0
 Author:      SW Dev Team
 */
 

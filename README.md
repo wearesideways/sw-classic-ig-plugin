@@ -30,3 +30,12 @@ You can set different settings by project, you must define them on your local-co
 - Setting to enable or disable WP Cron Job for daily automatic imports
     - This will import from all the configured accounts
 - In WP multisites, there will be a configuration page by each subsite
+## PHP compatibility
+
+Version 3.1 requires PHP 8.3 or newer and supports PHP 8.5 through the maintained
+Facebook SDK, PSR-18 Guzzle adapter, and Safe 3 dependencies. The configured Graph
+API version and existing request paths are unchanged.
+
+Run `composer install` and `composer test` for the offline compatibility checks.
+The tests mock all HTTP responses and WordPress writes; they do not log in to
+Facebook, import posts, run WordPress cron, or send notifications.
